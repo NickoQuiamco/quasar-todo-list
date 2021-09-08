@@ -1,0 +1,13 @@
+// app global css in SCSS form
+.list-header{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.q-scroll-area-tasks{
+    display: flex;
+    flex-grow: 1;
+}
+.auth-tab{
+    max-width: 500px;
+    margin: 0 auto
+}
