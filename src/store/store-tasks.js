@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { uid } from "quasar";
+import { uid,Notify } from "quasar";
 import { firebaseDB, firebaseAuth } from "boot/firebase";
 import { showErrorMessage } from "src/functions/function-show-error-message.js";
 
@@ -78,14 +78,25 @@ export default {
         const user_id = firebaseAuth.currentUser.uid;
         const task_ref = firebaseDB.ref('tasks/' + user_id + '/' + payload.id)
         task_ref.set(payload.task, error=>{
-          showErrorMessage(error.message);
+          if(error){
+            showErrorMessage(error.message);
+          }else{
+            Notify.create('Task added!')
+          }
         })
       },
       firebaseUpdateTask({}, payload){
         const user_id = firebaseAuth.currentUser.uid;
         const task_ref = firebaseDB.ref('tasks/' + user_id + '/' + payload.id)
         task_ref.update(payload.updates, error=>{
-          showErrorMessage(error.message);
+          if(error){
+            showErrorMessage(error.message);
+          }else{
+            let keys = Object.keys(payload.updates)
+            if(!(keys.includes('completed') && keys.length == 1) ){
+              Notify.create('Task updated!')
+            }
+          }
         })
       },
       firebaseDeleteTask({}, task_id){
@@ -93,7 +104,11 @@ export default {
         
         const task_ref = firebaseDB.ref('tasks/' + user_id + '/' + task_id)
         task_ref.remove(error=>{
-          showErrorMessage(error.message);
+          if(error){
+            showErrorMessage(error.message);
+          }else{
+            Notify.create('Task deleted!')
+          }
         })
       },
       setSearch( { commit }, payload ){
@@ -109,6 +124,9 @@ export default {
         //initial check of data
         user_tasks.once('value', snapshot=>{
           commit('setTaskDownloaded', true);
+        }, error => {
+          showErrorMessage(error.message)
+          this.$router.replace('/auth')
         });
         // child added firebase event
         user_tasks.on('child_added', snapshot =>{
