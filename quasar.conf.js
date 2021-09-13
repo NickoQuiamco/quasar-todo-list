@@ -161,6 +161,7 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
     electron: {
+      // platform: 'Mac',
       bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
