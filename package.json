@@ -6,7 +6,7 @@
   "author": "Nicko <quiamconicko@gmail.com>",
   "private": true,
   "scripts": {
-    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim"
+    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim --theme-color 3e75ac"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -20,7 +20,8 @@
     "devtron": "^1.4.0",
     "electron": "^9.4.4",
     "electron-debug": "^3.2.0",
-    "electron-devtools-installer": "^3.2.0"
+    "electron-devtools-installer": "^3.2.0",
+    "electron-packager": "^14.2.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
