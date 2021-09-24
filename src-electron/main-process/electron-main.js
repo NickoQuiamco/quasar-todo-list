@@ -1,4 +1,5 @@
-import { app, BrowserWindow, nativeTheme, Menu } from 'electron'
+import { app, BrowserWindow, nativeTheme, Menu, ipcMain } from 'electron'
+import { menuTemplate } from './electron-main-menu-template'
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
@@ -10,21 +11,23 @@ try {
  * Set `__statics` path to static files in production;
  * The reason we are setting it here is that the path needs to be evaluated at runtime
  */
+
   if (process.env.PROD) {
     global.__statics = __dirname
   }
 
 /*
-  variables and constants
-*/
-  let mainWindow
+  variables & constants
+*/  
+
+  export let mainWindow
+  const menu = Menu.buildFromTemplate(menuTemplate)
+
 /*
   app ready
-*/
-  app.on('ready', ()=>{
-    /**
-     * Initial window options
-     */
+*/  
+
+  app.on('ready', () => {
     mainWindow = new BrowserWindow({
       width: 1000,
       height: 600,
@@ -47,12 +50,22 @@ try {
     mainWindow.on('closed', () => {
       mainWindow = null
     })
-})
+
+    Menu.setApplicationMenu(menu)
+  })
+
 /*
-  app function
+  app events
 */
+
   app.on('window-all-closed', () => {
-    // if (process.platform !== 'darwin') {
-      app.quit()
-    // }
+    app.quit()
+  })
+
+/*
+  ipc events
+*/
+
+  ipcMain.on('quit-app', () => {
+    app.quit()
   })
