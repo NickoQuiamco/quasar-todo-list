@@ -1,6 +1,6 @@
 # Quasar App (todo-list)
 
-A Quasar Framework app
+Todo list written in quasar and vue with a firebase backend
 
 ## Install the dependencies
 ```bash
