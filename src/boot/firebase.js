@@ -3,7 +3,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/database';
 
 var firebaseConfig = {
-  // your firebase config here
+
 }
 
 let firebaseApp = firebase.initializeApp(firebaseConfig)
